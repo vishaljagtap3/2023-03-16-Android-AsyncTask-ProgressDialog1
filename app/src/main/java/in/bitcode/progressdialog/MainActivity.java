@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button btnDownload;
+    private SeekBar seekBar;
+    private TextView txtSeekBarValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +42,31 @@ public class MainActivity extends AppCompatActivity {
                         .execute(fileUrls);
             }
         });
+
+        seekBar.setOnSeekBarChangeListener(
+                new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int value, boolean b) {
+                        txtSeekBarValue.setText(value + "");
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                }
+        );
     }
 
     private void initViews() {
         btnDownload = findViewById(R.id.btnDownload);
+        seekBar = findViewById(R.id.seekBar);
+        txtSeekBarValue = findViewById(R.id.txtSeekBarValue);
     }
 
     class DownloadThread extends AsyncTask<String, Integer, Float> {
